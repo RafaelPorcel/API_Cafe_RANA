@@ -7,10 +7,12 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
 public class VentaDto {
-    private Long idProducto;
-    private List<Producto> productosVendidos;
+    private Long id;
+    private LocalDate fecha;
+    // Devolvemos la lista de productos comprados pero en formato DTO para ocultar su stock al cliente
+    private List<ProductoDto> productosVendidos;
     private double total;
 }

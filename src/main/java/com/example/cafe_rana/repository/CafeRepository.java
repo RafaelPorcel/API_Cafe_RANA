@@ -7,20 +7,24 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Repository
+@Repository // Le dice a Spring que esta clase es un Bean de acceso a datos
 public class CafeRepository {
+    // Usamos Map para simular las tablas de una base de datos
     private Map<Long, Producto> productos = new HashMap<>();
     private Map<Long, Venta> ventas = new HashMap<>();
-    private long contadorProductos = 3L;
+
+    // Contadores para simular el auto-incremento de las IDs
+    private long contadorProductos = 1L;
     private long contadorVentas = 1L;
 
-    {
-        productos.put(1L, new Producto(1L, "Café", 2.50, 100));
-        productos.put(2L, new Producto(2L, "Muffins Locos", 4.50, 30));
+    // Bloque de inicialización: carga datos por defecto al arrancar la app
+    public CafeRepository() {
+        registrarProducto(new Producto(null, "Café", 2.50, 100));
+        registrarProducto(new Producto(null, "Muffins Locos", 4.50, 30));
     }
 
     public Producto registrarProducto(Producto producto) {
-        producto.setId(contadorProductos++);
+        producto.setId(contadorProductos++); // Asignamos ID y luego incrementamos
         productos.put(producto.getId(), producto);
         return producto;
     }
@@ -29,26 +33,27 @@ public class CafeRepository {
         productos.remove(id);
     }
 
-    public Producto modificarProducto(Producto producto){
+    public Producto modificarProducto(Producto producto) {
         productos.put(producto.getId(), producto);
         return producto;
     }
 
-    public List<Producto> consultarProductos(){
-        return new ArrayList<>(productos.values());
+    public List<Producto> consultarProductos() {
+        return new ArrayList<>(productos.values()); // Convertimos los valores del Map a Lista
     }
 
     public Producto consultarProductoPorId(Long id) {
-        return productos.get(id);
+        return productos.get(id); // Devuelve null si el ID no existe
     }
 
-    public Venta registrarVenta(Venta venta){
+    public Venta registrarVenta(Venta venta) {
         venta.setId(contadorVentas++);
         ventas.put(venta.getId(), venta);
         return venta;
     }
 
-    public Optional<Venta> consultarVentaPorId(Long id){
+    public Optional<Venta> consultarVentaPorId(Long id) {
+        // Optional es ideal aquí porque una venta podría no existir
         return Optional.ofNullable(ventas.get(id));
     }
 }

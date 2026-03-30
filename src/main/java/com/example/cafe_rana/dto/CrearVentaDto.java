@@ -5,9 +5,11 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
 public class CrearVentaDto {
+    // El cliente solo nos envía una lista de IDs de los productos que quiere comprar
+    // Ejemplo: [1, 1, 2] (quiere dos cafés y un muffin)
     private List<Long> productosVendidos;
 }
 
